@@ -21,10 +21,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.className} h-screen flex flex-col`}
-        suppressHydrationWarning
-      >
+      <body className={`${inter.className}`} suppressHydrationWarning>
         <ClerkProvider appearance={{ theme: shadesOfPurple }}>
           <Header />
 

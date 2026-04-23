@@ -9,6 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { getCategoryEmoji, getCountryFlag } from "@/lib/data";
 
 const DashboardPage = async () => {
   const recipeData = await getRecipeOfTheDay();
@@ -18,6 +19,7 @@ const DashboardPage = async () => {
   const recipeOfTheDay = recipeData?.recipe || {};
   const categories = categoriesData?.categories || [];
   const areas = areasData?.areas || [];
+
   return (
     <div className="min-h-screen bg-stone-50 py-16 px-4">
       <div className="max-w-6xl mx-auto">
@@ -33,7 +35,7 @@ const DashboardPage = async () => {
 
         {/* Recipe Of The Day Section */}
         {recipeOfTheDay && (
-          <section>
+          <section className="mb-24">
             <div className="flex items-center gap-2 mb-6">
               <Flame className="w-6 h-6 text-orange-600" />
               <h2 className="text-3xl font-serif font-bold text-stone-600">
@@ -91,10 +93,72 @@ const DashboardPage = async () => {
         )}
 
         {/* Browse By Categories */}
-        {categories && <section></section>}
+        {categories && (
+          <section className="mb-24">
+            <div className="mb-8">
+              <h2 className="text-4xl md:text-5xl font-bold text-stone-900 mb-2">
+                Browse By Category
+              </h2>
+              <p className="text-stone-600 text-lg font-light">
+                Find recipes that match your mood
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+              {categories?.map((category, idx) => {
+                return (
+                  <Link
+                    key={idx}
+                    href={`/recipes/category/${category.strCategory.toLowerCase()}`}
+                  >
+                    <div className="bg-white p-6 border-2 border-stone-200 hover:border-orange-600 hover:shadow-lg transition-all text-center group cursor-pointer">
+                      <div className="text-4xl mb-3">
+                        {getCategoryEmoji(category.strCategory)}
+                      </div>
+                      <h3 className="font-bold text-stone-900 group-hover:text-orange-600 transition-colors text-sm">
+                        {category.strCategory}
+                      </h3>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         {/* Browse By Cuisine */}
-        {areas && <section></section>}
+        {areas && (
+          <section className="mb-24">
+            <div className="mb-8">
+              <h2 className="text-4xl md:text-5xl font-bold text-stone-900 mb-2">
+                Explore World Cuisines
+              </h2>
+              <p className="text-stone-600 text-lg font-light">
+                Travel the globe through food
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+              {areas?.map((area, idx) => {
+                return (
+                  <Link
+                    key={idx}
+                    href={`/recipes/cuisine/${area.strArea.toLowerCase().replace(/\s+/g, "-")}`}
+                  >
+                    <div className="bg-white p-6 border-2 border-stone-200 hover:border-orange-600 hover:shadow-lg transition-all text-center group cursor-pointer">
+                      <div className="text-4xl mb-3">
+                        {getCountryFlag(area.strArea)}
+                      </div>
+                      <h3 className="font-bold text-stone-900 group-hover:text-orange-600 transition-colors text-sm">
+                        {area.strArea}
+                      </h3>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

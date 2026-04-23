@@ -8,6 +8,7 @@ import "./globals.css";
 // Import Component
 import Header from "@/components/views/header";
 import Footer from "@/components/views/footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,7 +27,7 @@ export default function RootLayout({ children }) {
           <Header />
 
           <main className="min-h-screen">{children}</main>
-
+          <Toaster richColors />
           <Footer />
         </ClerkProvider>
       </body>

@@ -3,7 +3,7 @@ const { toast } = require("sonner");
 
 const useFetch = (fetchAction, params) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fn = async (...args) => {
